@@ -1,18 +1,17 @@
 <head>
+   <link href="chemex.css" rel="stylesheet" type="css/text">
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script src="chemex.js"></script>
      <script>
     $( document ).ready(function() {
 
-        obj = new Chemex("an oxygen molecule is single bond to a hydrogen molecule and is double bond to a nitrogen molecule.");
-
-
-
+        obj = new Chemex("an oxygen atom is single bond to a hydrogen atom and is double bond to a nitrogen atom and is triple bond to a sodium atom and a single bond to a chloride atom.");
+        $("#chembox").html(obj.html);
         $( ".listener" ).keyup(function() {
           var n = Math.floor(Date.now());
-          if(n - t > 5000){
-            obj = convert($( ".listener" ).val());
-            $("#insert").html(obj);
+          if(n - t > 50){
+            obj = new Chemex($( ".listener" ).val());
+            $("#chembox").html(obj.html);
             t = n;
           }
         });
@@ -30,9 +29,42 @@
             background: linear-gradient(135deg, #5fa7ce 0%,#4592d1 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
             filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5fa7ce', endColorstr='#4592d1',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
         }
+        textarea{
+            width:100%;
+            font-size:1em;
+            padding:20px;
+            border:none;
+            margin-bottom:-100px;
+            background-color:transparent;
+            color:white;
+            font-family:Lato;
+            font-weight:200;
+            outline: none;
+        }
     </style>
 </head>
 <body>
+  <textarea class="listener">an oxygen atom is single bond to a hydrogen atom and is double bond to a nitrogen atom and is triple bond to a sodium atom and a single bond to a chloride atom.</textarea>
+  <div chembox id="chembox">
 
+          <div chempart box4_4>H</div>
+          <hr singlebond>
+          <hr>
+          <hr>
+
+          <div chempart box5_3>O</div>
+          <hr>
+          <hr>
+          <hr singlebond>
+
+
+          <div chempart box6_4>H</div>
+          <hr>
+          <hr>
+          <hr>
+          <!-- <hr doublebond> -->
+
+          <!-- <div chempart box6_5>K</div> -->
+      </div>
 
 </body>
