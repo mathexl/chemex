@@ -144,7 +144,7 @@ function prime(str){
   }
 
   special_molecules = [
-["water molecule","oxygen molecule single bonded  to a hydrogen molcule and a hydrogen molecule"],
+["water molecule","oxygen atom single bonded  to a hydrogen atom and a hydrogen atom"],
     ["table salt","a sodium atom single bonded to a chloride atom"]
   ]
 
@@ -155,4 +155,88 @@ function prime(str){
     }
   }
   return str;
+}
+
+function breakparts(str){
+    arr = str.split(",");
+    return arr;
+}
+
+function convert(str){
+  arr = breakparts(prime(str));
+  for(l = 0; l < arr.length; l++){
+    arr[l] = parse(arr[l]);
+  }
+}
+
+function parsebonds(str){
+  console.log(str);
+  keywords = [
+    ["single bond",1],
+    ["double bond",2],
+    ["triple bond",3]
+  ];
+
+  strs = str.split("and");
+  console.log(strs);
+  toadd = [];
+  found = false;
+  for(e = 0; e < strs.length; e++){
+    for(t = 0; t < keywords.length; t++){
+      if(strs[e].indexOf(keywords[t][0]) != -1){
+        found = true;
+        toadd.unshift(strs[e].substring(strs[e].indexOf(keywords[t][0])+keywords[t][0].length));
+      }
+    }
+  }
+
+  if(found == false){
+    return null;
+  }
+
+  for(o = 0; o < toadd.length; o++){
+    toadd[o] = parse(toadd[o]);
+  }
+
+  console.log(toadd);
+  return toadd;
+}
+
+var Molecule = function(){
+
+}
+
+var Oxygen = function(str){
+  Molecule.call(this);
+  this.bonds = parsebonds(str);
+}
+
+
+
+
+function parse(str){
+  elements = ["oxygen","hydrogen","sodium","chloride"];
+  minimum = str.length;
+  for(p = 0; p < elements.length; p++){
+    if(str.indexOf(elements[p]) != -1 && str.indexOf(elements[p]) < minimum){
+      minimum = str.indexOf(elements[p]);
+      chosen = elements[p];
+    }
+  }
+
+  pos = str.indexOf(chosen);
+  retaining_string = str.substring(pos+chosen.length);
+  console.log(str);
+  console.log(retaining_string);
+  if(chosen == "oxygen"){
+    atom = new Oxygen(retaining_string);
+  } else if(chosen == "hydrogen"){
+    atom = new Hydrogen(retaining_string);
+  } else if(chosen == "sodium"){
+    atom = new Sodium(retaining_string);
+  } else if(chosen == "chloride"){
+    atom = new Chloride(retaining_string);
+  }
+
+
 }
