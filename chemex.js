@@ -141,7 +141,7 @@ function prime(str){
   }
 
   special_molecules = [
-["water","an oxygen atom has a single bond  to a hydrogen atom and a single bond hydrogen atom"],
+["water","oxygen atom, which has a single bond  to a hydrogen atom and a single bond hydrogen atom,"],
     ["table salt","a sodium atom single bonded to a chloride atom"]
   ]
 
@@ -253,6 +253,7 @@ function addbonds(atom, str){
         found = true;
         bond = keywords[t][1];
         toadd.unshift([strs[e].substring(strs[e].indexOf(keywords[t][0])+keywords[t][0].length),bond]);
+        console.log(toadd);
       }
     }
   }
@@ -264,13 +265,18 @@ function addbonds(atom, str){
   for(o = 0; o < toadd.length; o++){
     bondtype = toadd[o][1];
     console.log(toadd[o][0]);
+    console.log(toadd[o][1]);
     if(atom.bonds == null){
       atom.bonds = [];
     }
-    atom.bonds.unshift(parse(toadd[o][0]));
-    len = atom.bonds.length;
-    atom.bonds[len-1].bondtype = bondtype;
+    coming = parse(toadd[o][0]);
+    coming.bondtype = bondtype;
+    atom.bonds.unshift(coming);
+
+    console.log(atom.bonds);
   }
+
+
 
   console.log(atom);
 
