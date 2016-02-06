@@ -118,7 +118,6 @@ var Chemex = function(str){
 
 function convert(str){
   str = prime(str);
-  console.log(str);
 }
 
 function prime(str){
@@ -163,42 +162,46 @@ function breakparts(str){
 }
 
 function convert(str){
+  schema = new Schema();
   arr = breakparts(prime(str));
   for(l = 0; l < arr.length; l++){
-    arr[l] = parse(arr[l]);
+    re = parse(arr[l]);
+    schema.add(re);
   }
+  console.log(schema);
+  return schema;
 }
 
 function parsebonds(str){
-  console.log(str);
   keywords = [
     ["single bond",1],
     ["double bond",2],
     ["triple bond",3]
   ];
-
+  var toadd = [];
   strs = str.split("and");
-  console.log(strs);
-  toadd = [];
   found = false;
   for(e = 0; e < strs.length; e++){
     for(t = 0; t < keywords.length; t++){
       if(strs[e].indexOf(keywords[t][0]) != -1){
         found = true;
-        toadd.unshift(strs[e].substring(strs[e].indexOf(keywords[t][0])+keywords[t][0].length));
+        bond = keywords[t][1];
+        toadd.unshift([strs[e].substring(strs[e].indexOf(keywords[t][0])+keywords[t][0].length),bond]);
       }
     }
   }
+
 
   if(found == false){
     return null;
   }
 
   for(o = 0; o < toadd.length; o++){
-    toadd[o] = parse(toadd[o]);
+    bondtype = toadd[o][1];
+    toadd[o] = parse(toadd[o][0]);
+    toadd[o].bondtype = bondtype;
   }
 
-  console.log(toadd);
   return toadd;
 }
 
@@ -206,7 +209,39 @@ var Molecule = function(){
 
 }
 
+var Schema = function(){
+  this.atoms = [];
+}
+
+Schema.prototype =  {
+  add: function(obj){
+    this.atoms.unshift(obj);
+    console.log(this.atoms);
+  }
+}
+
 var Oxygen = function(str){
+  Molecule.call(this);
+  this.bonds = parsebonds(str);
+  console.log(this);
+}
+
+var Hydrogen = function(str){
+  Molecule.call(this);
+  this.bonds = parsebonds(str);
+}
+
+var Nitrogen = function(str){
+  Molecule.call(this);
+  this.bonds = parsebonds(str);
+}
+
+var Sodium = function(str){
+  Molecule.call(this);
+  this.bonds = parsebonds(str);
+}
+
+var Chloride = function(str){
   Molecule.call(this);
   this.bonds = parsebonds(str);
 }
@@ -215,7 +250,7 @@ var Oxygen = function(str){
 
 
 function parse(str){
-  elements = ["oxygen","hydrogen","sodium","chloride"];
+  elements = ["oxygen","hydrogen","sodium","chloride","nitrogen"];
   minimum = str.length;
   for(p = 0; p < elements.length; p++){
     if(str.indexOf(elements[p]) != -1 && str.indexOf(elements[p]) < minimum){
@@ -226,8 +261,6 @@ function parse(str){
 
   pos = str.indexOf(chosen);
   retaining_string = str.substring(pos+chosen.length);
-  console.log(str);
-  console.log(retaining_string);
   if(chosen == "oxygen"){
     atom = new Oxygen(retaining_string);
   } else if(chosen == "hydrogen"){
@@ -236,7 +269,12 @@ function parse(str){
     atom = new Sodium(retaining_string);
   } else if(chosen == "chloride"){
     atom = new Chloride(retaining_string);
+  } else if(chosen == "nitrogen"){
+    atom = new Nitrogen(retaining_string);
+  } else {
+    atom = null;
   }
 
+  return atom;
 
 }
