@@ -141,7 +141,7 @@ function prime(str){
   }
 
   special_molecules = [
-["water","oxygen atom, which has a single bond  to a hydrogen atom and a single bond hydrogen atom,"],
+["water","an oxygen atom has a single bond  to a hydrogen atom and a single bond hydrogen atom"],
     ["table salt","a sodium atom single bonded to a chloride atom"]
   ]
 
