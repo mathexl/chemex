@@ -1,0 +1,42 @@
+<head>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="chemex.js"></script>
+     <script>
+    $( document ).ready(function() {
+
+        obj = new Chemex("four water molecules");
+
+
+
+        $( ".listener" ).keyup(function() {
+          var n = Math.floor(Date.now());
+          if(n - t > 5000){
+            obj = convert($( ".listener" ).val());
+            $("#insert").html(obj);
+            t = n;
+          }
+        });
+
+    });
+    </script>
+    <style>
+        body{
+            padding:0px;
+            margin:0px;
+                        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#5fa7ce+0,4592d1+99 */
+            background: #5fa7ce; /* Old browsers */
+            background: -moz-linear-gradient(-45deg, #5fa7ce 0%, #4592d1 99%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(-45deg, #5fa7ce 0%,#4592d1 99%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(135deg, #5fa7ce 0%,#4592d1 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5fa7ce', endColorstr='#4592d1',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+        }
+    </style>
+</head>
+<body>
+    <textarea class="listener">A 9 volt battery, b1, leads to a lightbulb, l1, a lightbulb, l2, a lightbulb, l4, and a lightbulb, l3 in series.  l2 is connected to b1.</textarea>
+    <div id="insert">
+
+
+    </div>
+
+</body>
